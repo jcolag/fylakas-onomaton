@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  pin: 1
+  share: false
+
+two:
+  name: MyString
+  pin: 1
+  share: false
