@@ -1,31 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Names</h1>
+<h1>Your Names</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Pin</th>
-      <th>Share</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @names.each do |name| %>
+<div class="product-block">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
       <tr>
-        <td><%= name.name %></td>
-        <td><%= name.pin %></td>
-        <td><%= name.share %></td>
-        <td><%= link_to 'Show', name %></td>
-        <td><%= link_to 'Edit', edit_name_path(name) %></td>
-        <td><%= link_to 'Destroy', name, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>PIN</th>
+        <th>Share</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+    </thead>
+    <tbody>
+      <% @names.each do |name| %>
+        <tr>
+          <td><%= name.name %></td>
+          <td><%= name.pin %></td>
+          <td><%= name.share %></td>
+          <td><%= link_to 'Show', name %></td>
+          <td><%= link_to 'Edit', edit_name_path(name) %></td>
+          <td><%= link_to 'Destroy', name, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <br>
 
 <%= link_to 'New Name', new_name_path %>
