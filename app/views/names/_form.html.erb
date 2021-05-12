@@ -11,22 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :pin %>
-    <%= form.number_field :pin %>
-  </div>
-
-  <div class="field">
-    <%= form.label :share %>
-    <%= form.check_box :share %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="product-block">
+    <table class="table table-striped table-bordered table-hover">
+      <tr>
+        <th><%= form.label :name %></th>
+        <td><%= form.text_field :name %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :pin %></th>
+        <td><%= form.number_field :pin %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :share %></th>
+        <td><%= form.check_box :share %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= form.submit %></td>
+      </tr>
+    </table>
   </div>
 <% end %>

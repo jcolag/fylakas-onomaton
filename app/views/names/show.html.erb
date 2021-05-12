@@ -1,19 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @name.name %>
-</p>
-
-<p>
-  <strong>Pin:</strong>
-  <%= @name.pin %>
-</p>
-
-<p>
-  <strong>Share:</strong>
-  <%= @name.share %>
-</p>
+<div class="product-block">
+  <table class="table table-striped table-bordered table-hover">
+    <tr>
+      <th>Name</th>
+      <td><%= @name.name %></td>
+    </tr>
+    <tr>
+      <th>PIN</th>
+      <td><%= @name.pin %></td>
+    </tr>
+    <tr>
+      <th>Share</th>
+      <td><%= @name.share %></td>
+    </tr>
+  </table>
+</div>
 
 <%= link_to 'Edit', edit_name_path(@name) %> |
 <%= link_to 'Back', names_path %>
