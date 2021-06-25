@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :activations
   resources :names
   devise_for :users
   root 'dashboard#index'

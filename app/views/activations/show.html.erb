@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @activation.code %>
+</p>
+
+<p>
+  <strong>Device info:</strong>
+  <%= @activation.device_info %>
+</p>
+
+<%= link_to 'Edit', edit_activation_path(@activation) %> |
+<%= link_to 'Back', activations_path %>

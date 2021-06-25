@@ -1,0 +1,27 @@
+<%= form_with(model: activation, local: true) do |form| %>
+  <% if activation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(activation.errors.count, "error") %> prohibited this activation from being saved:</h2>
+
+      <ul>
+        <% activation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :code %>
+    <%= form.text_field :code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :device_info %>
+    <%= form.text_area :device_info %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

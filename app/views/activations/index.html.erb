@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Activations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Device info</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activations.each do |activation| %>
+      <tr>
+        <td><%= activation.code %></td>
+        <td><%= activation.device_info %></td>
+        <td><%= link_to 'Show', activation %></td>
+        <td><%= link_to 'Edit', edit_activation_path(activation) %></td>
+        <td><%= link_to 'Destroy', activation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Activation', new_activation_path %>
