@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :users
+  get '/activate', to: 'activations#show'
   resources :activations
   resources :names
-  devise_for :users
   root 'dashboard#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

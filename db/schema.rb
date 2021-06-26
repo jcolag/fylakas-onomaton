@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_110404) do
+ActiveRecord::Schema.define(version: 2021_06_23_192801) do
+
+  create_table "activations", force: :cascade do |t|
+    t.string "code"
+    t.text "device_info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "names", force: :cascade do |t|
     t.string "name"
