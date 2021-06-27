@@ -1,5 +1,5 @@
 class ActivationsController < ApplicationController
-  before_action :set_activation, only: %i[ show edit update destroy ]
+  before_action :set_activation, only: %i[ edit update destroy ]
 
   # GET /activations or /activations.json
   def index
@@ -12,7 +12,12 @@ class ActivationsController < ApplicationController
 
   # GET /activations/new
   def new
-    @activation = Activation.new
+    code = generate_code 5, params
+
+    respond_to do |format|
+      format.html { redirect_to action: :show }
+      format.json { render json: code, status: :ok }
+    end
   end
 
   # GET /activations/1/edit
@@ -65,5 +70,12 @@ class ActivationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def activation_params
       params.require(:activation).permit(:code, :device_info)
+    end
+
+    def generate_code(length, params)
+      letters = Array('A'..'Z') + Array('0'..'9')
+      code = Array.new(length) { letters.sample }.join
+      result = { code: code, params: params, result: :ok }
+      result.to_json
     end
 end
