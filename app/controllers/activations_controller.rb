@@ -12,11 +12,15 @@ class ActivationsController < ApplicationController
 
   # GET /activations/new
   def new
-    code = generate_code 5, params
+    code, json = generate_code 5, params
+    Activation.new({
+      code: code,
+      device_info: params['device']
+    }).save
 
     respond_to do |format|
       format.html { redirect_to action: :show }
-      format.json { render json: code, status: :ok }
+      format.json { render json: json, status: :ok }
     end
   end
 
@@ -76,6 +80,6 @@ class ActivationsController < ApplicationController
       letters = Array('A'..'Z') + Array('0'..'9')
       code = Array.new(length) { letters.sample }.join
       result = { code: code, params: params, result: :ok }
-      result.to_json
+      return code, result.to_json
     end
 end
