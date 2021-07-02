@@ -1,14 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Code:</strong>
-  <%= @activation.code %>
-</p>
+<% activation = Activation.new %>
+<%= form_with(model: activation, local: true) do |form| %>
+  <% if activation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(activation.errors.count, "error") %> prohibited this activation from being saved:</h2>
 
-<p>
-  <strong>Device info:</strong>
-  <%= @activation.device_info %>
-</p>
+      <ul>
+        <% activation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= link_to 'Edit', edit_activation_path(@activation) %> |
+  <div class="field">
+    <%= form.label :code %>
+    <%= form.text_field :code %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Activate Device' %>
+  </div>
+<% end %>
+
 <%= link_to 'Back', activations_path %>
