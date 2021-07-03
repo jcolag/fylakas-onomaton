@@ -30,6 +30,7 @@ class ActivationsController < ApplicationController
 
   # POST /activations or /activations.json
   def create
+    return update if activation_params.has_key? 'code'
     @activation = Activation.new(activation_params)
 
     respond_to do |format|
@@ -45,6 +46,10 @@ class ActivationsController < ApplicationController
 
   # PATCH/PUT /activations/1 or /activations/1.json
   def update
+    @activation = Activation.find_by_code activation_params['code']
+    code, _ = generate_code 48, nil
+    @activation.activated = code
+
     respond_to do |format|
       if @activation.update(activation_params)
         format.html { redirect_to @activation, notice: "Activation was successfully updated." }
@@ -73,7 +78,7 @@ class ActivationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def activation_params
-      params.require(:activation).permit(:code, :device_info)
+      params.require(:activation).permit(:code, :device_info, :user)
     end
 
     def generate_code(length, params)
