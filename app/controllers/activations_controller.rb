@@ -49,6 +49,10 @@ class ActivationsController < ApplicationController
     @activation = Activation.find_by_code activation_params['code']
     code, _ = generate_code 48, nil
     @activation.activated = code
+    @activation.user_id = current_user.id
+
+    # Use information (hopefully) in @activation.device to
+    # to send the API key back to the waiting device.
 
     respond_to do |format|
       if @activation.update(activation_params)
