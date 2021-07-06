@@ -61,6 +61,7 @@ class ActivationsController < ApplicationController
     @activation = Activation.find_by_code activation_params['code']
     return redirect_to Activation.last, notice: 'No such activation code.' if @activation.nil?
     code, _ = generate_code 48, nil
+    return redirect_to Activation.last, notice: 'Activation code has expired.' if @activation.created_at < Time.now - 15.minute
     @activation.activated = code
     @activation.user_id = current_user.id
 
