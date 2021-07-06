@@ -59,6 +59,7 @@ class ActivationsController < ApplicationController
   # PATCH/PUT /activations/1 or /activations/1.json
   def update
     @activation = Activation.find_by_code activation_params['code']
+    return redirect_to Activation.last, notice: 'No such activation code.' if @activation.nil?
     code, _ = generate_code 48, nil
     @activation.activated = code
     @activation.user_id = current_user.id
