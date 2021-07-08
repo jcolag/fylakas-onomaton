@@ -1,5 +1,5 @@
 class ActivationsController < ApplicationController
-  before_action :set_activation, only: %i[ show edit update destroy ]
+  before_action :set_activation, only: %i[ edit update destroy ]
 
   # GET /activations or /activations.json
   def index
@@ -8,11 +8,12 @@ class ActivationsController < ApplicationController
 
   # GET /activations/1 or /activations/1.json
   def show
+    set_activation if params.has_key? :id
     result = {
       params: params,
       code: @activation.code,
       result: @activation.activated
-    }
+    } if params.has_key? :id
     json = result.to_json
 
     respond_to do |format|
