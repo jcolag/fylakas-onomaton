@@ -1,5 +1,6 @@
 class ActivationsController < ApplicationController
   before_action :set_activation, only: %i[ edit update destroy ]
+  skip_before_action :verify_authenticity_token, only: %i[verify]
 
   # GET /activations or /activations.json
   def index
@@ -89,6 +90,15 @@ class ActivationsController < ApplicationController
     end
   end
 
+  def verify
+    code = params['code']
+    activation = Activation.find_by_code code
+    result = { code: code, activated: verify_activated(activation) }
+    respond_to do |format|
+      format.json { render json: result.to_json }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activation
@@ -105,5 +115,11 @@ class ActivationsController < ApplicationController
       code = Array.new(length) { letters.sample }.join
       result = { code: code, params: params, result: :ok, id: '000' }
       return code, result.to_json
+    end
+
+    def verify_activated(activation)
+      return nil if activation.nil? || activation.activated.nil?
+      return activation.code if activation.created_at < Time.now - 15.minute
+      activation.activated
     end
 end

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get '/activate', to: 'activations#show'
+  post '/verify', to: 'activations#verify'
   resources :activations
   resources :names
   root 'dashboard#index'
