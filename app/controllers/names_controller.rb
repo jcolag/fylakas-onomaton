@@ -2,6 +2,7 @@
 
 # Handle requests relating to names
 class NamesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_name, only: %i[show edit update destroy]
 
   # GET /names or /names.json
