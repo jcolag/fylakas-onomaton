@@ -1,5 +1,5 @@
 class ActivationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[new verify]
   before_action :set_activation, only: %i[ edit update destroy ]
   skip_before_action :verify_authenticity_token, only: %i[verify]
 
