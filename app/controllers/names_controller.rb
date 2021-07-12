@@ -2,12 +2,15 @@
 
 # Handle requests relating to names
 class NamesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user_or_validate_api_key!
   before_action :set_name, only: %i[show edit update destroy]
 
   # GET /names or /names.json
   def index
     @names = Name.all
+    respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
   end
 
   # GET /names/1 or /names/1.json
@@ -68,5 +71,16 @@ class NamesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def name_params
     params.require(:name).permit(:name, :pin, :share)
+  end
+
+  def authenticate_user_or_validate_api_key!
+    return validate_api_key! if params['format'] == 'json'
+    return authenticate_user!
+  end
+
+  def validate_api_key!
+    key = params.has_key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
+    activation = Activation.find_by_activated key
+    @user = User.find activation.user_id unless activation.nil?
   end
 end
