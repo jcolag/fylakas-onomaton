@@ -7,25 +7,39 @@ class NamesController < ApplicationController
 
   # GET /names or /names.json
   def index
+    respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
     @names = Name.all
+  end
+
+  # GET /names/1 or /names/1.json
+  def show
     respond_to do |format|
       format.json { render json: { status: 'failed' } }
     end if @user.nil?
   end
 
-  # GET /names/1 or /names/1.json
-  def show; end
-
   # GET /names/new
   def new
+    respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
     @name = Name.new
   end
 
   # GET /names/1/edit
-  def edit; end
+  def edit
+    respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
+  end
 
   # POST /names or /names.json
   def create
+    respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
     @name = Name.new(name_params)
 
     respond_to do |format|
@@ -42,6 +56,9 @@ class NamesController < ApplicationController
   # PATCH/PUT /names/1 or /names/1.json
   def update
     respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
+    respond_to do |format|
       if @name.update(name_params)
         format.html { redirect_to @name, notice: 'Name was successfully updated.' }
         format.json { render :show, status: :ok, location: @name }
@@ -54,6 +71,9 @@ class NamesController < ApplicationController
 
   # DELETE /names/1 or /names/1.json
   def destroy
+    respond_to do |format|
+      format.json { render json: { status: 'failed' } }
+    end if @user.nil?
     @name.destroy
     respond_to do |format|
       format.html { redirect_to names_url, notice: 'Name was successfully destroyed.' }
