@@ -17,6 +17,7 @@ class ActivationsController < ApplicationController
       result: @activation.activated
     } if params.has_key? :id
     json = result.to_json
+    response.set_header('Access-Control-Allow-Origin', '*')
 
     respond_to do |format|
       format.html { render :show, location: @activation }
@@ -32,6 +33,7 @@ class ActivationsController < ApplicationController
       device_info: params['device']
     })
     act.save
+    response.set_header('Access-Control-Allow-Origin', '*')
 
     respond_to do |format|
       format.html { redirect_to action: :show }
