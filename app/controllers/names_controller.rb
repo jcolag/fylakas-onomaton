@@ -4,27 +4,18 @@
 class NamesController < ApplicationController
   before_action :authenticate_user_or_validate_api_key!
   before_action :set_name, only: %i[show edit update destroy]
+  skip_before_action :verify_authenticity_token, only: %i[create]
 
   # GET /names or /names.json
   def index
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
-    @names = Name.all
+    @names = Name.where('user_id = ?', current_user.nil? ? nil : current_user.id)
   end
 
   # GET /names/1 or /names/1.json
-  def show
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
-  end
+  def show; end
 
   # GET /names/new
   def new
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
     @name = Name.new
   end
 
@@ -40,7 +31,7 @@ class NamesController < ApplicationController
     respond_to do |format|
       format.json { render json: { status: 'failed' } }
     end if @user.nil?
-    @name = Name.new(name_params)
+    @name = Name.new name: params.require(:name), user_id: @user.id
 
     respond_to do |format|
       if @name.save
@@ -90,11 +81,11 @@ class NamesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def name_params
-    params.require(:name).permit(:name, :pin, :share)
+    params.require(:name).permit(:pin, :share)
   end
 
   def authenticate_user_or_validate_api_key!
-    return validate_api_key! if params['format'] == 'json'
+    return validate_api_key! if request.format == 'json'
     return authenticate_user!
   end
 
