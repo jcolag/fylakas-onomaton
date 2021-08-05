@@ -1,5 +1,5 @@
 class ActivationsController < ApplicationController
-  before_action :authenticate_user!, except: %i[new verify]
+  before_action :authenticate_user_or_validate_api_key!
   before_action :set_activation, only: %i[ edit update destroy ]
   skip_before_action :verify_authenticity_token, only: %i[verify]
 
@@ -105,7 +105,7 @@ class ActivationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activation
-      @activation = Activation.find(params[:id])
+      @activation = Activation.find_by_code(params[:code])
     end
 
     # Only allow a list of trusted parameters through.
@@ -125,4 +125,15 @@ class ActivationsController < ApplicationController
       return activation.code if activation.created_at < Time.now - 15.minute
       activation.activated
     end
+
+  def authenticate_user_or_validate_api_key!
+    return validate_api_key! if request.format == 'json'
+    return authenticate_user!
+  end
+
+  def validate_api_key!
+    key = params.has_key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
+    activation = Activation.find_by_activated key
+    @user = User.find activation.user_id unless activation.nil?
+  end
 end
