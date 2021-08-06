@@ -1,6 +1,6 @@
 class ActivationsController < ApplicationController
   before_action :authenticate_user_or_validate_api_key!
-  before_action :set_activation, only: %i[ edit update destroy ]
+  before_action :set_activation, only: %i[edit update destroy]
   skip_before_action :verify_authenticity_token, only: %i[verify]
 
   # GET /activations or /activations.json
@@ -103,28 +103,29 @@ class ActivationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_activation
-      @activation = Activation.find_by_code(params[:code])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def activation_params
-      params.require(:activation).permit(:code, :device_info, :user)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_activation
+    @activation = Activation.find_by_code(params[:code])
+  end
 
-    def generate_code(length, params)
-      letters = Array('A'..'Z') + Array('0'..'9')
-      code = Array.new(length) { letters.sample }.join
-      result = { code: code, params: params, result: :ok, id: '000' }
-      return code, result.to_json
-    end
+  # Only allow a list of trusted parameters through.
+  def activation_params
+    params.require(:activation).permit(:code, :device_info, :user)
+  end
 
-    def verify_activated(activation)
-      return nil if activation.nil? || activation.activated.nil?
-      return activation.code if activation.created_at < Time.now - 15.minute
-      activation.activated
-    end
+  def generate_code(length, params)
+    letters = Array('A'..'Z') + Array('0'..'9')
+    code = Array.new(length) { letters.sample }.join
+    result = { code: code, params: params, result: :ok, id: '000' }
+    return code, result.to_json
+  end
+
+  def verify_activated(activation)
+    return nil if activation.nil? || activation.activated.nil?
+    return activation.code if activation.created_at < Time.now - 15.minute
+    activation.activated
+  end
 
   def authenticate_user_or_validate_api_key!
     return validate_api_key! if request.format == 'json'
