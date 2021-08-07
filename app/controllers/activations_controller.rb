@@ -106,7 +106,10 @@ class ActivationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_activation
-    @activation = Activation.find_by_code(params[:code])
+    id = params[:id]
+    @activation = Activation.where "id = ?", params[:id]
+    @activation = @activation.first unless @activation.nil?
+    @activation = Activation.find_by_code(params[:code]) if @activation.nil?
   end
 
   # Only allow a list of trusted parameters through.
