@@ -1,1 +1,1 @@
-json.array! @activations, partial: "activations/activation", as: :activation
+json.array! @activations, partial: 'activations/activation', as: :activation

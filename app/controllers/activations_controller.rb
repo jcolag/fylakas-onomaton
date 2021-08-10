@@ -11,11 +11,13 @@ class ActivationsController < ApplicationController
   # GET /activations/1 or /activations/1.json
   def show
     set_activation if params.has_key? :id
-    result = {
-      params: params,
-      code: @activation.code,
-      result: @activation.activated
-    } if params.has_key? :id
+    if params.has_key? :id
+      result = {
+        params: params,
+        code: @activation.code,
+        result: @activation.activated
+      }
+    end
     json = result.to_json
     response.set_header('Access-Control-Allow-Origin', '*')
 
@@ -29,9 +31,9 @@ class ActivationsController < ApplicationController
   def new
     code, json = generate_code 5, params
     act = Activation.new({
-      code: code,
-      device_info: params['device']
-    })
+                           code: code,
+                           device_info: params['device']
+                         })
     act.save
     response.set_header('Access-Control-Allow-Origin', '*')
 
@@ -42,17 +44,17 @@ class ActivationsController < ApplicationController
   end
 
   # GET /activations/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /activations or /activations.json
   def create
     return update if activation_params.has_key? 'code'
+
     @activation = Activation.new(activation_params)
 
     respond_to do |format|
       if @activation.save
-        format.html { redirect_to @activation, notice: "Activation was successfully created." }
+        format.html { redirect_to @activation, notice: 'Activation was successfully created.' }
         format.json { render :show, status: :created, location: @activation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,8 +67,12 @@ class ActivationsController < ApplicationController
   def update
     @activation = Activation.find_by_code activation_params['code']
     return redirect_to Activation.last, notice: 'No such activation code.' if @activation.nil?
-    code, _ = generate_code 48, nil
-    return redirect_to Activation.last, notice: 'Activation code has expired.' if @activation.created_at < Time.now - 15.minute
+
+    code, = generate_code 48, nil
+    if @activation.created_at < Time.now - 15.minute
+      return redirect_to Activation.last, notice: 'Activation code has expired.'
+    end
+
     @activation.activated = code
     @activation.user_id = current_user.id
 
@@ -75,7 +81,7 @@ class ActivationsController < ApplicationController
 
     respond_to do |format|
       if @activation.update(activation_params)
-        format.html { redirect_to @activation, notice: "Activation was successfully updated." }
+        format.html { redirect_to @activation, notice: 'Activation was successfully updated.' }
         format.json { render :show, status: :ok, location: @activation }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -88,7 +94,7 @@ class ActivationsController < ApplicationController
   def destroy
     @activation.destroy
     respond_to do |format|
-      format.html { redirect_to activations_url, notice: "Activation was successfully destroyed." }
+      format.html { redirect_to activations_url, notice: 'Activation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -107,7 +113,7 @@ class ActivationsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_activation
     id = params[:id]
-    @activation = Activation.where "id = ?", params[:id]
+    @activation = Activation.where 'id = ?', params[:id]
     @activation = @activation.first unless @activation.nil?
     @activation = Activation.find_by_code(params[:code]) if @activation.nil?
   end
@@ -121,18 +127,20 @@ class ActivationsController < ApplicationController
     letters = Array('A'..'Z') + Array('0'..'9')
     code = Array.new(length) { letters.sample }.join
     result = { code: code, params: params, result: :ok, id: '000' }
-    return code, result.to_json
+    [code, result.to_json]
   end
 
   def verify_activated(activation)
     return nil if activation.nil? || activation.activated.nil?
     return activation.code if activation.created_at < Time.now - 15.minute
+
     activation.activated
   end
 
   def authenticate_user_or_validate_api_key!
     return validate_api_key! if request.format == 'json'
-    return authenticate_user!
+
+    authenticate_user!
   end
 
   def validate_api_key!

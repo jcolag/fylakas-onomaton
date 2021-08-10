@@ -21,16 +21,20 @@ class NamesController < ApplicationController
 
   # GET /names/1/edit
   def edit
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
+    if @user.nil?
+      respond_to do |format|
+        format.json { render json: { status: 'failed' } }
+      end
+    end
   end
 
   # POST /names or /names.json
   def create
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
+    if @user.nil?
+      respond_to do |format|
+        format.json { render json: { status: 'failed' } }
+      end
+    end
     @name = Name.new name: params.require(:name), user_id: @user.id
 
     respond_to do |format|
@@ -46,9 +50,11 @@ class NamesController < ApplicationController
 
   # PATCH/PUT /names/1 or /names/1.json
   def update
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
+    if @user.nil?
+      respond_to do |format|
+        format.json { render json: { status: 'failed' } }
+      end
+    end
     respond_to do |format|
       if @name.update(name_params)
         format.html { redirect_to @name, notice: 'Name was successfully updated.' }
@@ -62,9 +68,11 @@ class NamesController < ApplicationController
 
   # DELETE /names/1 or /names/1.json
   def destroy
-    respond_to do |format|
-      format.json { render json: { status: 'failed' } }
-    end if @user.nil?
+    if @user.nil?
+      respond_to do |format|
+        format.json { render json: { status: 'failed' } }
+      end
+    end
     @name.destroy
     respond_to do |format|
       format.html { redirect_to names_url, notice: 'Name was successfully destroyed.' }
@@ -86,7 +94,8 @@ class NamesController < ApplicationController
 
   def authenticate_user_or_validate_api_key!
     return validate_api_key! if request.format == 'json'
-    return authenticate_user!
+
+    authenticate_user!
   end
 
   def validate_api_key!
