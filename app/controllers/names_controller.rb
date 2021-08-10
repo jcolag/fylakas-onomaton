@@ -99,7 +99,7 @@ class NamesController < ApplicationController
   end
 
   def validate_api_key!
-    key = params.has_key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
+    key = params.key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
     activation = Activation.find_by_activated key
     @user = User.find activation.user_id unless activation.nil?
   end

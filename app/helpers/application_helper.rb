@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def boostrap_class(alert)
     { success: 'alert-success', error: 'alert-danger', notice: 'alert-success', warning: 'alert-warning',

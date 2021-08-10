@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivationsController < ApplicationController
   before_action :authenticate_user_or_validate_api_key!
   before_action :set_activation, only: %i[edit update destroy]
@@ -10,8 +12,8 @@ class ActivationsController < ApplicationController
 
   # GET /activations/1 or /activations/1.json
   def show
-    set_activation if params.has_key? :id
-    if params.has_key? :id
+    set_activation if params.key? :id
+    if params.key? :id
       result = {
         params: params,
         code: @activation.code,
@@ -48,7 +50,7 @@ class ActivationsController < ApplicationController
 
   # POST /activations or /activations.json
   def create
-    return update if activation_params.has_key? 'code'
+    return update if activation_params.key? 'code'
 
     @activation = Activation.new(activation_params)
 
@@ -144,7 +146,7 @@ class ActivationsController < ApplicationController
   end
 
   def validate_api_key!
-    key = params.has_key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
+    key = params.key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
     activation = Activation.find_by_activated key
     @user = User.find activation.user_id unless activation.nil?
   end
