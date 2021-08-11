@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Name creation migration
 class CreateNames < ActiveRecord::Migration[6.0]
   def change
     create_table :names do |t|

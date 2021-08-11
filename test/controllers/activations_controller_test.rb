@@ -36,7 +36,12 @@ class ActivationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update activation' do
-    patch activation_url(@activation), params: { activation: { code: @activation.code, device_info: @activation.device_info } }
+    patch activation_url(@activation), params: {
+      activation: {
+        code: @activation.code,
+        device_info: @activation.device_info
+      }
+    }
     assert_redirected_to activation_url(@activation)
   end
 
