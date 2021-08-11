@@ -21,62 +21,46 @@ class NamesController < ApplicationController
 
   # GET /names/1/edit
   def edit
-    if @user.nil?
-      respond_to do |format|
-        format.json { render json: { status: 'failed' } }
-      end
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: { status: 'failed' } } if @user.nil?
     end
   end
 
   # POST /names or /names.json
   def create
-    if @user.nil?
-      respond_to do |format|
-        format.json { render json: { status: 'failed' } }
-      end
-    end
-    @name = Name.new name: params.require(:name), user_id: @user.id
+    @name = Name.new name: name_from_params(params), user_id: userid
 
     respond_to do |format|
-      if @name.save
-        format.html { redirect_to @name, notice: 'Name was successfully created.' }
-        format.json { render :show, status: :created, location: @name }
+      if userid.nil?
+        format.json { render json: { status: 'failed' } }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @name.errors, status: :unprocessable_entity }
+        create_respond(format)
       end
     end
   end
 
   # PATCH/PUT /names/1 or /names/1.json
   def update
-    if @user.nil?
-      respond_to do |format|
-        format.json { render json: { status: 'failed' } }
-      end
-    end
     respond_to do |format|
-      if @name.update(name_params)
-        format.html { redirect_to @name, notice: 'Name was successfully updated.' }
-        format.json { render :show, status: :ok, location: @name }
+      if @user.nil? && current_user.nil?
+        format.json { render json: { status: 'failed' } }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @name.errors, status: :unprocessable_entity }
+        update_respond(format)
       end
     end
   end
 
   # DELETE /names/1 or /names/1.json
   def destroy
-    if @user.nil?
-      respond_to do |format|
-        format.json { render json: { status: 'failed' } }
-      end
-    end
-    @name.destroy
+    @name.destroy unless @user.nil? && current_user.nil?
     respond_to do |format|
       format.html { redirect_to names_url, notice: 'Name was successfully destroyed.' }
-      format.json { head :no_content }
+      if @user.nil?
+        format.json { render json: { status: 'failed' } }
+      else
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -84,7 +68,7 @@ class NamesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_name
-    @name = Name.find(params[:id])
+    @name = Name.find_by_id(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
@@ -102,5 +86,38 @@ class NamesController < ApplicationController
     key = params.key?('apiKey') ? params['apiKey'] : 'not-a-real-key'
     activation = Activation.find_by_activated key
     @user = User.find activation.user_id unless activation.nil?
+  end
+
+  def create_respond(format)
+    if @name.save
+      format.html { redirect_to @name, notice: 'Name was successfully created.' }
+      format.json { render :show, status: :created, location: @name }
+    else
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @name.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def update_respond(format)
+    if @name.update(name_params)
+      format.html { redirect_to @name, notice: 'Name was successfully updated.' }
+      format.json { render :show, status: :ok, location: @name }
+    else
+      format.html { render :edit, status: :unprocessable_entity }
+      format.json { render json: @name.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def userid
+    return nil if @user.nil? && current_user.nil?
+
+    @user.nil? ? current_user.id : @user.id
+  end
+
+  def name_from_params(params)
+    n = params.require :name
+    return n if n.instance_of? String
+
+    n[:name]
   end
 end
