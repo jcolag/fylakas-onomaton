@@ -11,17 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :code %>
-    <%= form.text_field :code %>
-  </div>
-
-  <div class="field">
-    <%= form.label :device_info %>
-    <%= form.text_area :device_info %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="product-block">
+    <table class="table table-striped table-bordered table-hover">
+      <tr>
+        <th><%= form.label :code %></th>
+        <td><%= form.text_field :code %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :device_info %></th>
+        <td><%= form.text_area :device_info %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= form.submit class: "btn btn-primary" %></td>
+      </tr>
+    </table>
   </div>
 <% end %>

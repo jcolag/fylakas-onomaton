@@ -1,0 +1,29 @@
+:root {
+  /* CSS HEX */
+  --wild-blue-yonder: #8ea4d260;
+  --hookers-green: #496f5dff;
+  --independence: #49516fff;
+  --tumbleweed: #d69f7eff;
+  --black-bean: #3c0000ff;
+
+  /* CSS HSL */
+  --wild-blue-yonder: hsla(221, 43%, 69%, 0.375);
+  --hookers-green: hsla(22, 52%, 67%, 1);
+  --independence: hsla(227, 21%, 36%, 1);
+  --tumbleweed: hsla(152, 21%, 36%, 1);
+  --black-bean: hsla(0, 100%, 12%, 1);
+
+  /* SCSS HEX */
+  $wild-blue-yonder: #8ea4d260;
+  $hookers-green: #496f5dff;
+  $independence: #49516fff;
+  $tumbleweed: #d69f7eff;
+  $black-bean: #3c0000ff;
+
+  /* SCSS HSL */
+  $wild-blue-yonder: hsla(221, 43%, 69%, 1);
+  $hookers-green: hsla(22, 52%, 67%, 1);
+  $independence: hsla(227, 21%, 36%, 1);
+  $tumbleweed: hsla(152, 21%, 36%, 1);
+  $black-bean: hsla(0, 100%, 12%, 1);
+}

@@ -1,26 +1,48 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+@import "palette";
+$theme-colors: (
+  primary: #49516f,
+  secondary: #d69f7e,
+  success: #496f5d,
+  info: #8ea4d2,
+  warning: #d69f7e,
+  danger: #8e5d67
+);
 
-//@import "bootstrap-sprockets";
-//@import "bootstrap";
+@import "bootstrap";
+
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url('/fonts/Montserrat-Bold.ttf');
+  font-weight: 800;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Literata';
+  src: url('/fonts/Literata-VariableFont_opsz,wght.ttf');
+  font-weight: 300;
+  font-style: normal;
+}
 
 #main-container {
+  color: var(--independence);
   position: relative;
   padding-top: 50px;
   padding-bottom: 50px;
+}
+
+.dark-mode #main-container {
+  color: whitesmoke;
+}
+
+.navbar-brand, .navbar-inverse {
+  background-color: var(--tumbleweed);
+  color: var(--independence) !important;
+  font-family: 'Montserrat-Bold';
+}
+
+.container {
+  background-image: url('/paper_texture.png');
 }
 
 .devise-container {
@@ -37,15 +59,171 @@
 }
 
 body {
-  background: #f2f2f2;
+  background-color: var(--wild-blue-yonder);
+  color: var(--independence);
+  font-family: 'Literata';
+}
+
+body.dark-mode {
+  background-color: var(--independence);
+  color: whitesmoke;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--independence);
+  font-family: 'Montserrat-Bold';
+}
+
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
+  color: var(--hookers-green);
+  font-family: 'Montserrat-Bold';
+}
+
+input, textarea {
+  margin-left: 1%;
+  width: 98%;
+}
+
+table {
+  width: 100%;
 }
 
 th {
-  background-color: #333333;
-  color: white;
+  background-color: var(--black-bean) !important;
+  color: var(--wild-blue-yonder) !important;
+  font-family: 'Montserrat-Bold';
+}
+
+.dark-mode th {
+  background-color: var(--wild-blue-yonder) !important;
+  color: var(--black-bean) !important;
 }
 
 td {
-  background-color: #808080;
+  background-color: var(--hookers-green);
+  color: var(--independence);
+}
+
+.dark-mode td {
+  background-color: var(--independence);
+  color: var(--hookers-green);
+}
+
+.modal-open {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.finished-loading {
+  display: none;
+}
+
+.start-loading {
+  background-color: var(--hookers-green);
+  color: var(--tumbleweed);
+  display: block;
+  font-size: xx-large;
+  height: 100vh;
+  left: 50%;
+  padding-top: 40vh;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 5;
+}
+
+.dark-mode .start-loading {
+  background-color: var(--tumbleweed);
+  color: var(--hookers-green);
+}
+
+#hamnav {
+  float: right;
+  position: sticky;
+  text-align: right;
+  top: 0.5em;
+  width: 25%;
+}
+
+#hamnav label, #hamburger { display: none; }
+
+#hamlabel {
+  font-size: 0.1em;
+  position: fixed;
+  top: 0.1em;
+}
+
+#hamnav label {
   color: white;
+  display: inline-block;
+  font-size: 1.2em;
+  font-style: normal;
+  padding: 10px;
+  text-align: right;
+}
+
+#hamitems a {
+  border-top: 1px solid white;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+}
+
+#hamitems { display: none; }
+#hamnav input:checked ~ #hamitems { display: block; }
+
+.ham-item {
+  color: white;
+  font-weight: bold;
+}
+
+.ham-item a {
+  color: white;
+}
+
+.search-results {
+  display: none;
+  max-height: 67vh;
+  overflow-y: scroll;
+}
+
+.search-results a {
+  border: 0 !important;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.new-articles {
+  color: var(--black-bean);
+  display: inline-block;
+  height: 50px;
+  opacity: 0;
+  padding: 15px 15px;
+}
+
+.new-articles a:link,.new-articles a:visited {
+  color: var(--black-bean) !important;
+}
+
+.highlight-new-articles {
+  opacity: 1.0;
+  transition: opacity 5.0s ease-in-out;
+}
+
+.aatn-logo #g4912 {
+  visibility: hidden;
+}
+
+.dark-mode .aatn-logo #g4912 {
+  visibility: visible;
+}
+
+.aatn-logo {
+  left: 5%;
+  position: relative;
+  vertical-align: middle;
+  width: 90%;
 }
