@@ -1,12 +1,17 @@
 @import "palette";
+$light-blue-yonder: lighten($wild-blue-yonder, 25%);
 $theme-colors: (
   primary: #49516f,
   secondary: #d69f7e,
   success: #496f5d,
   info: #8ea4d2,
   warning: #d69f7e,
-  danger: #8e5d67
+  danger: #8e5d67,
 );
+$enable-gradients: true;
+$enable-shadows: true;
+$white: $light-blue-yonder;
+$black: darken($black-bean, 25%);
 
 @import "bootstrap";
 
@@ -25,20 +30,24 @@ $theme-colors: (
 }
 
 #main-container {
-  color: var(--independence);
+  color: $independence;
   position: relative;
   padding-top: 50px;
   padding-bottom: 50px;
 }
 
 .dark-mode #main-container {
-  color: whitesmoke;
+  color: $light-blue-yonder;
 }
 
-.navbar-brand, .navbar-inverse {
-  background-color: var(--tumbleweed);
-  color: var(--independence) !important;
+.navbar-inverse {
+  background-color: $hookers-green;
+  color: $tumbleweed !important;
   font-family: 'NotoSerifDisplay-Bold';
+}
+
+.navbar-brand {
+  color: $tumbleweed !important;
 }
 
 .container {
@@ -59,23 +68,23 @@ $theme-colors: (
 }
 
 body {
-  background-color: var(--wild-blue-yonder);
-  color: var(--independence);
+  background-color: $light-blue-yonder;
+  color: $independence;
   font-family: 'NotoSansDisplay';
 }
 
 body.dark-mode {
-  background-color: var(--independence);
-  color: whitesmoke;
+  background-color: $independence;
+  color: $light-blue-yonder;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--independence);
+  color: $independence;
   font-family: 'NotoSerifDisplay-Bold';
 }
 
 .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
-  color: var(--hookers-green);
+  color: lighten($tumbleweed, 15%);
   font-family: 'NotoSerifDisplay-Bold';
 }
 
@@ -89,24 +98,24 @@ table {
 }
 
 th {
-  background-color: var(--black-bean) !important;
-  color: var(--wild-blue-yonder) !important;
+  background-color: $black-bean !important;
+  color: $wild-blue-yonder !important;
   font-family: 'NotoSerifDisplay-Bold';
 }
 
 .dark-mode th {
-  background-color: var(--wild-blue-yonder) !important;
-  color: var(--black-bean) !important;
+  background-color: $wild-blue-yonder !important;
+  color: $black-bean !important;
 }
 
 td {
-  background-color: var(--hookers-green);
-  color: var(--independence);
+  background-color: $hookers-green;
+  color: $independence;
 }
 
 .dark-mode td {
-  background-color: var(--independence);
-  color: var(--hookers-green);
+  background-color: $independence;
+  color: $light-blue-yonder;
 }
 
 .modal-open {
@@ -119,8 +128,8 @@ td {
 }
 
 .start-loading {
-  background-color: var(--hookers-green);
-  color: var(--tumbleweed);
+  background-color: $hookers-green;
+  color: $tumbleweed;
   display: block;
   font-size: xx-large;
   height: 100vh;
@@ -135,8 +144,8 @@ td {
 }
 
 .dark-mode .start-loading {
-  background-color: var(--tumbleweed);
-  color: var(--hookers-green);
+  background-color: $tumbleweed;
+  color: $hookers-green;
 }
 
 #hamnav {
@@ -197,7 +206,7 @@ td {
 }
 
 .new-articles {
-  color: var(--black-bean);
+  color: $black-bean;
   display: inline-block;
   height: 50px;
   opacity: 0;
@@ -205,7 +214,7 @@ td {
 }
 
 .new-articles a:link,.new-articles a:visited {
-  color: var(--black-bean) !important;
+  color: $black-bean !important;
 }
 
 .highlight-new-articles {
