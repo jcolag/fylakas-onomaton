@@ -11,15 +11,15 @@ $theme-colors: (
 @import "bootstrap";
 
 @font-face {
-  font-family: 'Montserrat-Bold';
-  src: url('/fonts/Montserrat-Bold.ttf');
+  font-family: 'NotoSerifDisplay-Bold';
+  src: url('/fonts/NotoSerifDisplay/NotoSerifDisplay-SemiBold.ttf');
   font-weight: 800;
   font-style: bold;
 }
 
 @font-face {
-  font-family: 'Literata';
-  src: url('/fonts/Literata-VariableFont_opsz,wght.ttf');
+  font-family: 'NotoSansDisplay';
+  src: url('/fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf');
   font-weight: 300;
   font-style: normal;
 }
@@ -38,7 +38,7 @@ $theme-colors: (
 .navbar-brand, .navbar-inverse {
   background-color: var(--tumbleweed);
   color: var(--independence) !important;
-  font-family: 'Montserrat-Bold';
+  font-family: 'NotoSerifDisplay-Bold';
 }
 
 .container {
@@ -61,7 +61,7 @@ $theme-colors: (
 body {
   background-color: var(--wild-blue-yonder);
   color: var(--independence);
-  font-family: 'Literata';
+  font-family: 'NotoSansDisplay';
 }
 
 body.dark-mode {
@@ -71,12 +71,12 @@ body.dark-mode {
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--independence);
-  font-family: 'Montserrat-Bold';
+  font-family: 'NotoSerifDisplay-Bold';
 }
 
 .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
   color: var(--hookers-green);
-  font-family: 'Montserrat-Bold';
+  font-family: 'NotoSerifDisplay-Bold';
 }
 
 input, textarea {
@@ -91,7 +91,7 @@ table {
 th {
   background-color: var(--black-bean) !important;
   color: var(--wild-blue-yonder) !important;
-  font-family: 'Montserrat-Bold';
+  font-family: 'NotoSerifDisplay-Bold';
 }
 
 .dark-mode th {
