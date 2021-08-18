@@ -7,7 +7,13 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'utility', 'data-turbolinks-track': 'reload' %>
   <link href="/awesome-free-5.15.3-web/css/all.css" rel="stylesheet">
+  <script type="text/javascript">
+    document.addEventListener('turbolinks:before-render', (event) => {
+      setDarkness(event.data.newBody);
+    });
+  </script>
 </head>
 
 <body id="body">
@@ -16,6 +22,7 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="/">
+            <img src="/fo-pen.svg" style="height: 1em;">
             Fýlakas Onomáton
           </a>
         </div>
@@ -43,18 +50,21 @@
                 > Dark 🌒
               </label>
             </div>
-            <div class="ham-item">
-              <%= link_to "Edit profile", edit_user_registration_path %>
-            </div>
-            <div class="ham-item">
-              <%= link_to "Sign up", new_user_registration_path %>
-            </div>
-            <div class="ham-item">
-              <%= link_to "Sign up", new_user_registration_path %>
-            </div>
-            <div class="ham-item">
-              <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-            </div>
+            <% if user_signed_in? %>
+              <div class="ham-item">
+                <%= link_to raw("Edit Profile <i class='far fa-address-card'></i>"), edit_user_registration_path %>
+              </div>
+              <div class="ham-item">
+                <%= link_to raw("Log Out <i class='fas fa-sign-out-alt'></i>"), destroy_user_session_path, method: :delete %>
+              </div>
+            <% else %>
+              <div class="ham-item">
+                <%= link_to raw("Sign Up <i class='fas fa-door-open'></i>"), new_user_registration_path %>
+              </div>
+              <div class="ham-item">
+                <%= link_to raw("Sign In <i class='fas fa-sign-in-alt'></i>"), new_user_session_path %>
+              </div>
+            <% end %>
             <div class="ham-item">
               <a href="/pages/app">Get the Fýlakas Onomáton App <i class="fab fa-apple"></i> <i class="fab fa-android"></i></a>
             </div>
