@@ -9,7 +9,8 @@ class ActivationsController < ApplicationController
 
   # GET /activations or /activations.json
   def index
-    @activations = Activation.all
+    uid = current_user.nil? ? nil : current_user.id
+    @activations = Activation.where('user_id = ?', uid)
   end
 
   # GET /activations/1 or /activations/1.json
