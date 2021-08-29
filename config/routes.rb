@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get '/activate', to: 'activations#show'
+  get '/pages/:page' => 'pages#show'
   post '/verify', to: 'activations#verify'
   resources :activations
   resources :names
