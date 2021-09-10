@@ -68,6 +68,10 @@ $black: darken($black-bean, 25%);
 
 body {
   background-color: $light-blue-yonder;
+  background-image: url(/fo-pen-bg.svg);
+  background-position: top 3em center;
+  background-repeat: no-repeat;
+  background-size: auto 90vh;
   color: $independence;
   font-family: 'NotoSansDisplay';
 }
