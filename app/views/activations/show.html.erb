@@ -18,7 +18,9 @@
     <table class="table table-striped table-bordered table-hover">
       <tr>
         <th><%= form.label :code %></th>
-        <td><%= form.text_field :code, class: "form-control", placeholder: "Enter Code from Device" %></td>
+        <td>
+          <%= form.text_field :code, class: "form-control", placeholder: "Enter Code from Device", style: "text-transform: uppercase", maxlength: 5, minlength: 5 %>
+        </td>
       </tr>
       <tr>
         <td colspan="2"><%= form.submit 'Activate Device', class: "btn btn-primary" %></td>
